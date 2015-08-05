@@ -1,0 +1,153 @@
+body {
+	margin: 0;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+body, #rodapeOrcamento {
+	min-width: 1007px;
+}
+
+a, a:link, a:visited, a:hover, a:active {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+a, a:link, a:visited {
+	color: #333333;
+	text-decoration: none;
+}
+
+a:hover, a:active {
+	color: #999999;
+	text-decoration: underline;
+}
+
+#menuPrincipal {
+	position: fixed;
+	z-index: 1;
+}
+
+.menuPrincipalEmail,
+#menuPrincipal,
+#rodape {
+	background: url(../imagens/menuPrincipal/fundo.jpg);
+	width: 100%;
+	min-width: 578px;
+	height: 23px;
+	padding-top: 4px;
+	font-family: Andale Mono;
+	font-size: 12px;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+.menuPrincipalEmail a,
+#menuPrincipal a,
+#rodape  a {
+	font-family: Andale Mono;
+	font-size: 12px;
+	font-weight: normal;
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+.menuPrincipalEmail a:hover,
+#menuPrincipal a:hover,
+#rodape  a:hover {
+	font-family: Andale Mono;
+	font-size: 12px;
+	font-weight: normal;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#cabecalho {
+	position: relative;
+	top: 27px;
+	height: 202px;
+}
+
+#menuEsquerdo ul .fundo1 div {
+	background: url(../imagens/menuEsquerdo/fundo1.gif);
+}
+
+#menuEsquerdo ul .fundo1:hover div {
+	background: url(../imagens/menuEsquerdo/fundoHover1.gif);
+}
+
+#menuEsquerdo ul .fundo2 div {
+	background: url(../imagens/menuEsquerdo/fundo2.gif);
+}
+
+#menuEsquerdo ul .fundo2:hover div {
+	background: url(../imagens/menuEsquerdo/fundoHover2.gif);
+}
+
+#menuEsquerdo ul .fundo3 div {
+	background: url(../imagens/menuEsquerdo/fundo3.gif);
+}
+
+#menuEsquerdo ul .fundo3:hover div {
+	background: url(../imagens/menuEsquerdo/fundoHover3.gif);
+}
+
+#menuEsquerdo {
+	width: 150px;
+}
+
+#menuEsquerdo #bordaLateral {
+	float: right;
+	width: 6px; 
+}
+
+#menuEsquerdo #bordaFinal {
+	margin-top: -7px;
+	padding: 0px;
+	height: 6px;
+	width: 142px;
+}
+
+.menuEsquerdo {
+	margin: 0;
+	padding: 2px 0 0 2px;
+	list-style: none;
+	color: white;
+}
+
+.menuEsquerdo li {
+	width: 142px;
+	height: 22px;
+	border-top: 1pt #999999 solid;
+	text-decoration: none;
+}
+
+.menuEsquerdo li:hover {
+	text-decoration: underline;
+}
+
+.menuEsquerdo li .handle {
+	height: 23px;
+	width: 100%;
+}
+
+.menuEsquerdo li a {
+	color: white;
+	font-family: Andale Mono;
+	font-size: 10px;
+	font-weight: normal;
+	text-decoration: none;
+	display: block;
+	padding-top: 5px;
+	padding-bottom: 6px;
+	padding-left: 5px;
+}
+.textoRodape {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	color: #FFFFFF;
+}
