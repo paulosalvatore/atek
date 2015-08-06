@@ -8,6 +8,8 @@
 			"localizacao" => "Localização",
 			"fale_conosco" => "Fale Conosco"
 		);
+		private $diretorioPaginas = "paginas/";
+		private $arquivoNaoEncontrado = "naoEncontrado";
 		public function exibirMenuPrincipal(){
 			$menuPrincipal = '
 				<table border="0" cellpadding="0" cellspacing="0">
@@ -110,6 +112,93 @@
 				</table>
 			';
 			return $rodape;
+		}
+		public function exibirAviso(){
+			$queryConfig = mysql_query("SELECT * FROM config");
+			while($resultadoConfig = mysql_fetch_assoc($queryConfig)){
+				$aviso = $resultadoConfig["aviso"];
+				$corAviso = $resultadoConfig["cor_aviso"];
+			}
+			return ($aviso ? '<span style="color: #'.$corAviso.';">'.$aviso.'</span>' : "");
+		}
+		public function pegarLinkSubmenu($pagina, $linkId){
+			if($pagina == "menus")
+				$Classe = new Menus();
+			elseif($pagina == "categorias")
+				$Classe = new Categorias();
+			elseif($pagina == "produtos")
+				$Classe = new Produtos();
+			return ($Classe ? $Classe->pegarUrl($linkId) : "?p=".$pagina."-".$linkId);
+		}
+		public function exibirSubmenu($submenuId){
+			$exibirSubmenu = "";
+			$submenu = array();
+			$larguraTotal = 0;
+			$querySubmenu = mysql_query("SELECT * FROM submenus WHERE submenu LIKE '$submenuId' ORDER BY ordem ASC");
+			while($resultadoSubmenu = mysql_fetch_assoc($querySubmenu)){
+				$submenu[] = $resultadoSubmenu;
+				$larguraTotal += $resultadoSubmenu["largura"];
+			}
+			$exibirSubmenu .= '
+				<div id="submenu">
+					<ul id="listaSubmenu">
+						';
+						foreach($submenu as $c => $v)
+							$exibirSubmenu .= '
+								<li style="width: '.number_format(($larguraTotal != 100 ? 100/count($submenu) : $v["largura"]), 12, ".", "").'%;">
+									<div>
+										<a href="'.($this->pegarLinkSubmenu($v["pagina"], $v["link_id"])).'">
+											'.$v["nome"].'
+										</a>
+									</div>
+								</li>
+							';
+						$exibirSubmenu .= '
+					</ul>
+					<div id="sombra"></div>
+				</div>
+			';
+			return $exibirSubmenu;
+		}
+		public function exibirPagina($pagina){
+			$arquivo = $this->diretorioPaginas.(is_file($this->diretorioPaginas.$pagina.".php") ? $pagina : $this->arquivoNaoEncontrado).".php";
+			include("includes/incluirArquivos.php");
+			include("includes/iniciarClasses.php");
+			include($arquivo);
+			$conteudoPagina = "";
+			if($submenu > 0)
+				$conteudoPagina .= $this->exibirSubmenu($submenu);
+			if(!empty($titulo) AND $ocultarTitulo != 1)
+				$conteudoPagina .= '
+					<div class="titulo">
+						'.$titulo.'
+					</div>
+				';
+			$barraNavegacaoInicial = array("Home" => "?p=principal");
+			if(is_array($barraNavegacao))
+				$barraNavegacao = array_merge($barraNavegacaoInicial, $barraNavegacao);
+			else
+				$barraNavegacao = $barraNavegacaoInicial;
+			$conteudoPagina .= '
+				<div class="barraNavegacao">
+					';
+					foreach($barraNavegacao as $nome => $link)
+						$conteudoPagina .= '
+							<a href="'.$link.'">'.$nome.'</a> >
+						';
+					$conteudoPagina .= '
+					'.$titulo.'
+				</div>
+			';
+			if(!empty($conteudo))
+				$conteudoPagina .= '
+					<div class="conteudoPagina">
+						'.$conteudo.'
+					</div>
+				';
+			if(!empty($incluirConteudo))
+				$conteudoPagina .= $incluirConteudo;
+			return $conteudoPagina;
 		}
 	}
 ?>
