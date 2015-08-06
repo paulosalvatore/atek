@@ -1,8 +1,5 @@
 <?php
 	class Funcao {
-		public function pegarUrl($id){
-			return "?p=menus-$id-".$this->pegarDescricao($id);
-		}
 		public function limparString($string){
 			$a = "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ‗אבגדהוזחטיךכלםמןנסעףפץצרשתû‎‎‏ÿRr' ";
 			$b = "AAAAAAACEEEEIIIIDNOOOOOOUUUUYBSaaaaaaaceeeeiiiidnoooooouuuyybyRr +";
