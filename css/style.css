@@ -25,6 +25,25 @@ a:hover, a:active {
 	text-decoration: underline;
 }
 
+.input {
+	text-indent: 4px;
+	font-size: 12px;
+	box-shadow: inset 0 1px 1px #AAA;
+	-moz-box-shadow: inset 0 1px 1px #AAA;
+	-webkit-box-shadow: inset 0 1px 1px #AAA;
+	border: 1px solid #D6D6D6;
+	background: white;
+	padding: 3px 2px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	height: 18px;
+}
+
+.button {
+	margin-left: 0px;
+}
+
 #menuPrincipal {
 	position: fixed;
 	z-index: 1;
@@ -145,6 +164,239 @@ a:hover, a:active {
 	padding-bottom: 6px;
 	padding-left: 5px;
 }
+
+#conteudo {
+	padding: 2px 2px 2px 4px;
+}
+
+#boxBusca {
+	font-weight: bold;
+}
+
+#boxBusca td {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: right;
+}
+
+#boxBusca #aviso {
+	text-align: center;
+}
+
+#boxBusca #consultaProdutos {
+	margin-left: 1px;
+	margin-right: 2px;
+	width: 50%;
+	height: 23px;
+	background: url(../imagens/conteudo/pesquisar.png) no-repeat 2px 1px;
+	line-height: 20px;
+	font-size: 16px;
+	border-radius: 6px; -webkit-border-radius: 6px; -moz-border-radius: 6px;
+	box-shadow: inset 0 1px 2px #DDD;
+	border: 1px solid #969696;
+	padding: 0 85px 0 32px;
+	display: inline-block;
+}
+
+#boxBusca #consultaProdutos:focus {
+	background-color: #F0F0F0;
+	border: 1px solid #876200;
+	outline: 0;
+}
+
+#boxBusca #buscarProdutos {
+	position: absolute;
+	margin-top: 0px;
+	margin-left: -82px;
+	cursor: pointer;
+	background: url(../imagens/conteudo/fundoBotao.png) repeat-x;
+	border-radius: 0 6px 4px 0; -webkit-border-radius: 0 6px 4px 0; -moz-border-radius: 0 6px 4px 0;
+	border: 0;
+	font-weight: bold;
+	font-size: 18px;
+	color: #FFFFFF;
+	line-height: 21.9px;
+	padding: 2px 9px 1px 10px;
+	display: inline-block;
+}
+
+#boxBusca #buscarProdutos:hover {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+	filter: alpha(opacity=70);
+	-moz-opacity: 0.7;
+	-khtml-opacity: 0.7;
+	opacity: 0.7;
+}
+
+#boxBusca #botaoOrcamento {
+	margin-top: -2px;
+	float: right;
+	width: 40px;
+	cursor: pointer;
+}
+
+#boxBusca #botaoOrcamento:hover {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+	filter: alpha(opacity=70);
+	-moz-opacity: 0.7;
+	-khtml-opacity: 0.7;
+	opacity: 0.7;
+}
+
+.barraNavegacao {
+	padding: 5px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #999999;
+}
+
+.titulo {
+	background: url(../imagens/menuPrincipal/fundo.jpg);
+	color: white;
+	text-transform: uppercase;
+	padding: 5px;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.conteudoPagina {
+	background: #F3F3F3;
+	padding: 5px;
+	padding-bottom: 25px;
+	min-height: 60px;
+	text-align: justify;
+	font-size: 13px;
+}
+
+.conteudoPagina .textoPequeno {
+	font-size: 9px;
+}
+
+.conteudoPagina .textoAzul {
+	color: blue;
+}
+
+.conteudoPagina .textoDestaque {
+	color: red;
+	font-weight: bold;
+}
+
+.conteudoPagina .link {
+	cursor: pointer;
+}
+
+.conteudoPagina .link:hover {
+	text-decoration: underline;
+}
+
+#submenu {
+	font-family: Andale Mono;
+	font-size: 10px;
+	font-weight: normal;
+	text-align: center;
+}
+
+#submenu ul{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+#submenu ul li {
+	float: left;
+	height: 21px;
+	background: url(../imagens/submenu/fundo.gif);
+}
+
+#submenu ul li div a{
+	background: url(../imagens/submenu/fundo.gif);
+	height: 10px;
+	padding: 5px;
+	font-family: Andale Mono;
+	font-size: 10px;
+	font-weight: normal;
+	text-align: center;
+	display: block;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#submenu ul li:not(:first-child) div {
+	border-left: 1px solid grey;
+}
+
+#submenu ul li div a:hover {
+	background: url(../imagens/submenu/fundo1.gif);
+	text-decoration: underline;
+}
+
+#sombra {
+	clear: both;
+	background: url(../imagens/submenu/sombra.gif);
+	height: 6px;
+	width: 100%;
+}
+
+.assistenciaTecnica {
+	text-align: justify;
+	font-size: 13px;
+	padding: 5px;
+	padding-left: 30px;
+	padding-bottom: 25px;
+	background: #F3F3F3;
+}
+
+#faleConosco select {
+	width: 504px;
+	margin-left: 2px;
+	height: 26px;
+}
+
+#faleConosco textarea {
+	height: 100px;
+	max-height: 200px;
+	resize: vertical;
+}
+
+#faleConosco #localizarCep,
+#faleConosco #localizarCepCarregando {
+	position: relative;
+	top: 5px;
+	margin-left: -28px;
+	cursor: pointer;
+}
+
+#faleConosco #localizarCepCarregando {
+	top: 2px;
+	cursor: progress;
+}
+
+#faleConosco #enviarOrcamentoIndisponivel,
+#faleConosco #enviarOrcamentoDisponivel {
+	display: none;
+}
+
+#faleConosco .mensagemErro {
+	color: red;
+	font-weight: bold;
+}
+
+#mensagemEnviada {
+	display: none;
+	font-weight: bold;
+}
+
+.textoPequeno,
+.pequeno,
+.peq {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: normal;
+	color: #000000;
+}
+
 .textoRodape {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 9px;
