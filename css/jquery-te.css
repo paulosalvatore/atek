@@ -312,6 +312,7 @@
 .jqte_cpalette {
 	display: none;
 	position: absolute;
+	z-index: 1;
 	padding: 6px;
 	width: 144px;
 	background: #FFF;
