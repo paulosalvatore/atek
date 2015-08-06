@@ -10,9 +10,9 @@
 		}
 		public function pegarInformacoes($id){
 			$informacoes = array();
-			$queryMenu = mysql_query("SELECT * FROM categorias WHERE (id LIKE '$id')");
-			while($resultadoMenu = mysql_fetch_assoc($queryMenu))
-				$informacoes = $resultadoMenu;
+			$queryCategoria = mysql_query("SELECT * FROM categorias WHERE (id LIKE '$id')");
+			while($resultadoCategoria = mysql_fetch_assoc($queryCategoria))
+				$informacoes = $resultadoCategoria;
 			return $informacoes;
 		}
 	}
