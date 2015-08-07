@@ -1,6 +1,6 @@
 <?php
 	class FaleConosco {
-		private $formulario = array(
+		public $formulario = array(
 			"setor" => array(
 				"exibicao" => "Setor",
 				"tipo" => "lista",
@@ -289,6 +289,175 @@
 				</div>
 			';
 			return $exibirFormulario;
+		}
+		public function enviarEmail($formulario){
+			include("includes/arquivos/data.php");
+			$Funcao = new Funcao();
+			if(!empty($formulario["telefone"])){
+				$ddd = substr($formulario["telefone"], 0, 2);
+				if(strlen($formulario["telefone"]) == 10)
+					$wr = 4;
+				elseif(strlen($formulario["telefone"]) == 11)
+					$wr = 5;
+				$telefone = wordwrap(substr($formulario["telefone"], 2, 9), $wr, "-", true);
+				$exibirTelefone = "(".$ddd.") ".$telefone;
+			}
+			$conteudoEmail = '
+				<style>
+					.conteudoEmail {
+						font-family: Verdana;
+						font-size: 14px;
+						width: 980px;
+					}
+					.mensagem {
+						word-wrap: break-word;
+					}
+					.conteudo_mensagem {
+						width: 100%;
+						font-size: 14px;
+						table-layout: fixed;
+					}
+					.conteudo_mensagem, .conteudo_mensagem td {
+						border: 1px solid black;
+						border-collapse: collapse;
+					}
+					.orcamento {
+						width: 100%;
+						border: 1px solid #555555;
+						text-align: center;
+					}
+					.cabecalho_orcamento {
+						height: 40px;
+						background: url(http://www.atek.com.br/imagens/geral/fundo_orcamento.png) no-repeat;
+						background-repeat: repeat-x;
+						font-size: 14px;
+						font-weight: bold;
+						color: #FFFFFF;
+					}
+					.produto_orcamento {
+						color: #666666;
+						font-weight: normal;
+					}
+					.produto_orcamento td {
+						padding: 10px;
+						border-bottom: 1px solid #E4E3E3;
+						font-size: 12px;
+					}
+					.produto_orcamento .quantidade,
+					.produto_orcamento .preco,
+					.produto_orcamento .subtotal {
+						border-left: 1px solid #E4E3E3;
+					}
+					.valores_orcamento {
+						text-align: right;
+					}
+					.valores_orcamento td {
+						padding: 5px;
+						font-size: 13px;
+						font-weight: bold;
+						color: #666666;
+					}
+				</style>
+				<div class="conteudoEmail">
+					<img src="http://www.atek.com.br/gerenciamento/imagens/geral/logo_pedido.jpg"><br>
+					<br>
+					<table class="conteudo_mensagem" cellpadding="5" cellspacing="0" border="0">
+						<tr>
+							<td width="150">
+								<b>Nome:</b>
+							</td>
+							<td>
+								'.$formulario["nome"].'
+							</td>
+						</tr>
+						<tr>
+							<td width="150">
+								<b>E-mail:</b>
+							</td>
+							<td>
+								<a href="mailto:'.$formulario["email"].'">'.$formulario["email"].'</a>
+							</td>
+						</tr>
+						';
+						if(!empty($formulario["telefone"]))
+							$conteudoEmail .= '
+								<tr>
+									<td width="150">
+										<b>Telefone:</b>
+									</td>
+									<td>
+										'.$exibirTelefone.'
+									</td>
+								</tr>
+							';
+						$conteudoEmail .= '
+						<tr>
+							<td width="150">
+								<b>CEP:</b>
+							</td>
+							<td>
+								'.wordwrap($formulario["cep"], 5, "-", true).'
+							</td>
+						</tr>
+						';
+						if((!empty($formulario["cidade"])) AND (!empty($formulario["estado"])))
+							$conteudoEmail .= '
+								<tr>
+									<td width="150">
+										<b>Cidade/Estado:</b>
+									</td>
+									<td>
+										'.$formulario["cidade"].'/'.$formulario["estado"].'
+									</td>
+								</tr>
+							';
+						if(!empty($formulario["assunto"]))
+							$conteudoEmail .= '
+								<tr>
+									<td width="150">
+										<b>Assunto:</b>
+									</td>
+									<td>
+										'.$formulario["assunto"].'
+									</td>
+								</tr>
+							';
+						$conteudoEmail .= '
+						<tr>
+							<td colspan="2">
+								<b>Mensagem:</b><br>
+								<div class="mensagem">
+									'.$formulario["mensagem"].'
+								</div>
+							</td>
+						</tr>
+					</table>
+					Mensagem enviada em <b>'.$data.' às '.$horario.'</b>.
+				</div>
+			';
+			$destinoGeral = "contato@atek.com.br";
+			if(($formulario["setor"] == "vendas") OR ($formulario["setor"] == "outros"))
+				$destino = "atek@atek.com.br";
+			if($formulario["setor"] == "assistencia_tecnica")
+				$destino = "assistenciatecnica@atek.com.br";
+			$assunto = $formulario["assunto"];
+			if(empty($assunto))
+				$assunto = "Sem assunto";
+			$assuntoCliente = "Sua mensagem foi recebida";
+			$conteudoEmailCliente = '
+				<img src="http://www.atek.com.br/gerenciamento/imagens/geral/logo_pedido.jpg"><br>
+				<br>
+				Olá <b>'.$formulario["nome"].'</b>,<br>
+				<br>
+				Agradecemos sua visita e a oportunidade de recebermos o seu contato. Em breve você receberá um e-mail contendo a resposta para sua questão.<br>
+				<br>
+				<b><u>Observação - Não é necessário responder esta mensagem.</b></u>
+			';
+			if(empty($destino))
+				$destino = "atek@atek.com.br";
+			$Funcao->enviarEmail($destino, $assunto, $conteudoEmail, "", "atek@atek.com.br");
+			$Funcao->enviarEmail($destinoGeral, $assunto, $conteudoEmail, "", "atek@atek.com.br");
+			$Funcao->enviarEmail($formulario["email"], $assuntoCliente, $conteudoEmailCliente, "", "atek@atek.com.br");
 		}
 	}
 ?>

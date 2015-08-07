@@ -33,14 +33,14 @@ function inserirValidacao(tipo, campo, mensagem){
 
 function verificarCampo(campo, valor){
 	$.ajax({
-		url: "controladores/faleConosco.php",
+		url: "controladores.php",
 		data:({
+			controlador: "faleConosco",
 			campo: campo,
 			valor: valor
 		}),
-		// dataType: "json",
+		dataType: "json",
 		success: function(result){
-			console.log(result);
 			$.each(result, function(index, value){
 				if(value != "")
 					inserirValidacao("erro", index, value);
@@ -58,13 +58,13 @@ function verificarCampos(formulario){
 	$(".jqte_editor").attr("contenteditable", false);
 	var retorno = true;
 	$.ajax({
-		url: "controladores/faleConosco.php",
+		url: "controladores.php",
 		data:({
+			controlador: "faleConosco",
 			formulario: formulario
 		}),
 		dataType: "json",
 		success: function(result){
-			console.log(result);
 			$.each(result, function(index, value){
 				if(value != ""){
 					inserirValidacao("erro", index, value);
