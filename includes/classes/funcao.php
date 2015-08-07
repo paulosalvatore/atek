@@ -43,7 +43,13 @@
 		public function carregarInsertSQL($tabela, $colunas, $valores){
 			foreach($valores as $c => $v)
 				$valores[$c] = "'".addslashes($v)."'";
-			return "INSERT INTO `$tabela` (".implode(",", $colunas).") VALUES (".implode(",", $valores).");";
+			return "INSERT INTO `$tabela` (`".implode("`, `", $colunas)."`) VALUES (".implode(", ", $valores).");";
+		}
+		public function carregarSearchSQL($colunas, $valores){
+			$searchSQL = array();
+			foreach($valores as $c => $v)
+				$searchSQL[] = "(`".(is_array($colunas) ? $colunas[$c] : $colunas)."` LIKE '".$valores[$c]."')";
+			return "WHERE (".implode(" OR ", $searchSQL).")";
 		}
 		public function enviarEmail($destinatario, $assunto, $conteudo, $remetenteNome, $remetenteEmail){
 			$cabecalho = "MIME-Version: 1.0\r\n";

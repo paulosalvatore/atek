@@ -1,4 +1,5 @@
 <?php
 	$titulo = "Ofertas e Lançamentos";
-	$conteudo = 'Página Principal';
+	$conteudo = $Anuncios->exibir("pagina_principal");
+	$ocultarBarraNavegacao = 1;
 ?>

@@ -174,22 +174,24 @@
 						'.$titulo.'
 					</div>
 				';
-			$barraNavegacaoInicial = array("Home" => "?p=principal");
-			if(is_array($barraNavegacao))
-				$barraNavegacao = array_merge($barraNavegacaoInicial, $barraNavegacao);
-			else
-				$barraNavegacao = $barraNavegacaoInicial;
-			$conteudoPagina .= '
-				<div class="barraNavegacao">
-					';
-					foreach($barraNavegacao as $nome => $link)
-						$conteudoPagina .= '
-							<a href="'.$link.'">'.$nome.'</a> >
+			if($ocultarBarraNavegacao != 1){
+				$barraNavegacaoInicial = array("Home" => "?p=principal");
+				if(is_array($barraNavegacao))
+					$barraNavegacao = array_merge($barraNavegacaoInicial, $barraNavegacao);
+				else
+					$barraNavegacao = $barraNavegacaoInicial;
+				$conteudoPagina .= '
+					<div class="barraNavegacao">
 						';
-					$conteudoPagina .= '
-					'.$titulo.'
-				</div>
-			';
+						foreach($barraNavegacao as $nome => $link)
+							$conteudoPagina .= '
+								<a href="'.$link.'">'.$nome.'</a> >
+							';
+						$conteudoPagina .= '
+						'.$titulo.'
+					</div>
+				';
+			}
 			if(!empty($conteudo))
 				$conteudoPagina .= '
 					<div class="conteudoPagina">

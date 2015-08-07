@@ -10,10 +10,11 @@
 		}
 		public function pegarInformacoes($id){
 			$informacoes = array();
-			$queryCategoria = mysql_query("SELECT * FROM categorias WHERE (id LIKE '$id')");
+			$Funcao = new Funcao();
+			$queryCategoria = mysql_query("SELECT * FROM `categorias` ".$Funcao->carregarSearchSQL("id", is_array($id) ? $id : array($id)));
 			while($resultadoCategoria = mysql_fetch_assoc($queryCategoria))
-				$informacoes = $resultadoCategoria;
-			return $informacoes;
+				$informacoes[$resultadoCategoria["id"]] = $resultadoCategoria;
+			return (count($informacoes) == 1 ? $informacoes[$id] : $informacoes);
 		}
 	}
 ?>

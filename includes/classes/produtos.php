@@ -10,10 +10,11 @@
 		}
 		public function pegarInformacoes($id){
 			$informacoes = array();
-			$queryProduto = mysql_query("SELECT * FROM produtos WHERE (id LIKE '$id')");
-			while($resultadoProduto = mysql_fetch_assoc($queryProduto))
-				$informacoes = $resultadoProduto;
-			return $informacoes;
+			$Funcao = new Funcao();
+			$queryProdutos = mysql_query("SELECT * FROM `produtos` ".$Funcao->carregarSearchSQL("id", is_array($id) ? $id : array($id)));
+			while($resultadoProdutos = mysql_fetch_assoc($queryProdutos))
+				$informacoes[$resultadoProdutos["id"]] = $resultadoProdutos;
+			return (count($informacoes) == 1 ? $informacoes[$id] : $informacoes);
 		}
 	}
 ?>
