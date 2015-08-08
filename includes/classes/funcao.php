@@ -11,6 +11,20 @@
 			$string = str_replace("%", "", $string);
 			return $string;
 		}
+		public function formatarCodigo($codigo){
+			$a = array(
+				array("AT-", "AT"),
+				array("AT", "AT-"),
+				array("AT-C", "ATC-"),
+				array("ATC-UB", "AT-CUB")
+			);
+			foreach($a as $b)
+				$codigo = str_replace($b[0], $b[1], $codigo);
+			return $codigo;
+		}
+		public function formatarPreco($preco, $exibirBRL = true){
+			return ($exibirBRL ? "R$ " : "").number_format($preco, 2, ",", ".");
+		}
 		public function validarControlador($controlador){
 			$arquivo = "controladores/$controlador.php";
 			if(!is_file($arquivo)){

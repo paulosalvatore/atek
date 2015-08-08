@@ -397,6 +397,65 @@ a:hover, a:active {
 	color: #000000;
 }
 
+.publicidade {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #FF0000;
+	font-weight: normal;
+}
+
+.peq_riscado {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: line-through;
+}
+
+.peqbold {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #000000;
+}
+
+.peqred {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #FF0000;
+	font-weight: normal;
+}
+
+.peqredbol {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #FF0000;
+}
+
+.peqcxa {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.preco_categoria {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	font-weight: normal;
+}
+
+.preco_antigo_categoria {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	color: #000000;
+	text-decoration: line-through;
+}
+
 .textoRodape {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 9px;

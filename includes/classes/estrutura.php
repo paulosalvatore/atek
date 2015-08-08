@@ -194,7 +194,7 @@
 			}
 			if(!empty($conteudo))
 				$conteudoPagina .= '
-					<div class="conteudoPagina">
+					<div class="conteudoPagina"'.($corConteudo ? ' style="background-color: '.$corConteudo.';"' : "").'>
 						'.$conteudo.'
 					</div>
 				';
