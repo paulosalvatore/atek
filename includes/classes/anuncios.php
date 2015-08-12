@@ -276,5 +276,24 @@
 			$exibicaoPreco .= '</table>';
 			return $exibicaoPreco;
 		}
+		public function pegarInformacoes($id){
+			$informacoes = array();
+			$Funcao = new Funcao();
+			$queryAnuncio = mysql_query("SELECT * FROM `anuncios` ".$Funcao->carregarSearchSQL("id", is_array($id) ? $id : array($id)));
+			while($resultadoAnuncio = mysql_fetch_assoc($queryAnuncio)){
+				// $anuncioId = $resultadoAnuncio["id"];
+				$informacoes[$resultadoAnuncio["id"]] = $resultadoAnuncio;
+				// $informacoes[$anuncioId]["link"] = $this->pegarUrl($anuncioId, $resultadoMenu["descricao"]);
+			}
+			return (count($informacoes) == 1 ? $informacoes[$id] : $informacoes);
+		}
+		public function carregarBarraNavegacao($anuncioInfo, $categoriaInfo){
+			$Menus = new Menus();
+			$menu = $Menus->pegarInformacoes($categoriaInfo["menu"]);
+			return array(
+				$menu["descricao"] => $menu["link"],
+				$categoriaInfo["descricao"] => $categoriaInfo["link"]
+			);
+		}
 	}
 ?>
