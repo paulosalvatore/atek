@@ -130,11 +130,11 @@
 				$Classe = new Produtos();
 			return ($Classe ? $Classe->pegarUrl($linkId) : "?p=".$pagina."-".$linkId);
 		}
-		public function exibirSubmenu($submenuId){
+		public function exibirSubmenu($id){
 			$exibirSubmenu = "";
 			$submenu = array();
 			$larguraTotal = 0;
-			$querySubmenu = mysql_query("SELECT * FROM submenus WHERE submenu LIKE '$submenuId' ORDER BY ordem ASC");
+			$querySubmenu = mysql_query("SELECT * FROM submenus WHERE submenu LIKE '$id' ORDER BY ordem ASC");
 			while($resultadoSubmenu = mysql_fetch_assoc($querySubmenu)){
 				$submenu[] = $resultadoSubmenu;
 				$larguraTotal += $resultadoSubmenu["largura"];
