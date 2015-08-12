@@ -2,6 +2,7 @@
 	class Anuncios {
 		private $diretorioImagensAnuncios = "imagens/anuncios/";
 		private $diretorioImagensCategorias = "imagens/categorias/";
+		private $diretorioImagensMenus = "imagens/menus/";
 		private $ocultarDisponibilidade = true;
 		public function carregar($id, $area){
 			$anuncioId = "anuncio";
@@ -55,7 +56,7 @@
 			$anuncios = $this->carregar($id, $area);
 			$anunciosMap = array_map("array_values", $anuncios);
 			$anuncios[0] = $anunciosMap[0];
-			$qtdeAnuncios = count($anuncios[0]);
+			$qtdeAnuncios = count($anuncios[0])+1;
 			$anunciosPorLinha = 3;
 			$maxProdutosAnuncio = 4;
 			$exibirAnuncios = "";
@@ -83,75 +84,92 @@
 							$linhaAtual = floor($linha/3);
 							$exibirAnuncios .= ($i > 0 ? "</tr>" : "").(($linha - $linhaAtual - 2 * $linhaAtual == 0 AND $i < $qtdeAnuncios * 3) ? '<tr><td colspan="3" style="height: 25px;"></td></tr>' : "").($i < $qtdeAnuncios * 3 ? '<tr align="center">' : "");
 						}
-						$anuncio = $anuncios[0][$i - $linha * 3 + $linhaAtual * 3];
-						if(!is_array($anuncio))
-							continue;
-						$anuncioInfo = $anuncio["info"];
-						$exibirLink = false;
 						$exibirAnuncio = "";
-						switch($linha - $linhaAtual - 2 * $linhaAtual){
-							case 0:
-								$banner = ($anuncioInfo["oferta"] == 1 ? "oferta" : ($anuncioInfo["lancamento"] == 1 ? "lancamento" : ""));
-								$exibirAnuncio = ($banner ? '<img src="imagens/banners/'.$banner.'.gif" />' : "");
-								break;
-							case 1:
-								$exibirLink = true;
-								$exibirAnuncio = '<img src="'.$this->pegarImagem($anuncio["tipo"], $anuncio["anuncio"], "p").'" />';
-								break;
-							case 2:
-								$exibirLink = true;
-								if($anuncio["tipo"] == 1){
-									$produtosInfo = $anuncios[1];
-									$produtos = array_slice($anuncio["produtos"], 0, $maxProdutosAnuncio);
-									$codigos = array();
-									if($anuncioInfo["exibir_codigo"] == 1){
-										if($anuncioInfo["exibir_codigo_geral"] == 1)
-											$codigos[] = $anuncioInfo["codigo"];
-										else{
-											foreach($produtos as $produtoId)
-												$codigos[] = $Funcao->formatarCodigo($produtosInfo[$produtoId]["codigo"]);
+						$exibirLink = false;
+						$anuncioPosicao = $i - $linha * 3 + $linhaAtual * 3;
+						$anuncio = $anuncios[0][$anuncioPosicao];
+						if(is_array($anuncio)){
+							$anuncioInfo = ($anuncio["tipo"] == 1 ? $anuncio["info"] : $anuncios[$anuncio["tipo"]][$anuncio["anuncio"]]);
+							switch($linha - $linhaAtual - 2 * $linhaAtual){
+								case 0:
+									$banner = ($anuncioInfo["oferta"] == 1 ? "oferta" : ($anuncioInfo["lancamento"] == 1 ? "lancamento" : ""));
+									$exibirAnuncio = ($banner ? '<img src="imagens/banners/'.$banner.'.gif" />' : "");
+									break;
+								case 1:
+									$exibirLink = true;
+									$exibirAnuncio = '<img src="'.$this->pegarImagem($anuncio["tipo"], $anuncio["anuncio"], "p").'" />';
+									break;
+								case 2:
+									$exibirLink = true;
+									if($anuncio["tipo"] == 1){
+										$produtosInfo = $anuncios[1];
+										$produtos = array_slice($anuncio["produtos"], 0, $maxProdutosAnuncio);
+										$codigos = array();
+										if($anuncioInfo["exibir_codigo"] == 1){
+											if($anuncioInfo["exibir_codigo_geral"] == 1)
+												$codigos[] = $anuncioInfo["codigo"];
+											else{
+												foreach($produtos as $produtoId)
+													$codigos[] = $Funcao->formatarCodigo($produtosInfo[$produtoId]["codigo"]);
+											}
+											$exibirAnuncio .= implode(" | ", $codigos).'<br>';
 										}
-										$exibirAnuncio .= implode(" | ", $codigos).'<br>';
-									}
-									if($anuncioInfo["exibir_descricao"] == 1)
-										$exibirAnuncio .= ($anuncioInfo["descricao"] ? $anuncioInfo["descricao"] : $produtosInfo[$produtos[0]["descricao_site"]]).'<br>';
-									if($anuncioInfo["exibir_publicidade"] == 1)
-										$exibirAnuncio .= '<span class="'.$anuncioInfo["span_publicidade"].'">'.$anuncioInfo["publicidade"].'</span><br>';
-									if($anuncioInfo["exibir_preco"] == 1){
-										if($anuncioInfo["exibir_preco_geral"] == 1)
-											$preco = $anuncioInfo["preco"];
-										else{
+										if($anuncioInfo["exibir_descricao"] == 1)
+											$exibirAnuncio .= ($anuncioInfo["descricao"] ? $anuncioInfo["descricao"] : $produtosInfo[$produtos[0]["descricao_site"]]).'<br>';
+										if($anuncioInfo["exibir_publicidade"] == 1)
+											$exibirAnuncio .= '<span class="'.$anuncioInfo["span_publicidade"].'">'.$anuncioInfo["publicidade"].'</span><br>';
+										if($anuncioInfo["exibir_preco"] == 1){
 											$precos = array();
-											foreach($produtos as $c => $produtoId)
+											if($anuncioInfo["exibir_preco_geral"] == 1)
 												$precos[] = array(
-													"preco" => $Funcao->formatarPreco($produtosInfo[$produtoId]["preco"]),
-													"precoAntigo" => $Funcao->formatarPreco($produtosInfo[$produtoId]["preco_antigo"]),
-													"exibirPrecoAntigo" => $produtosInfo[$produtoId]["exibir_preco_antigo"],
-													"disponibilidade" => $produtosInfo[$produtoId]["disponibilidade"]
+													"preco" => $Funcao->formatarPreco($anuncioInfo["preco"]),
+													"precoAntigo" => 0,
+													"exibirPrecoAntigo" => 0,
+													"disponibilidade" => 1
 												);
-											$preco = $this->exibirPreco($precos);
+											else{
+												foreach($produtos as $c => $produtoId)
+													$precos[] = array(
+														"preco" => $Funcao->formatarPreco($produtosInfo[$produtoId]["preco"]),
+														"precoAntigo" => $Funcao->formatarPreco($produtosInfo[$produtoId]["preco_antigo"]),
+														"exibirPrecoAntigo" => $produtosInfo[$produtoId]["exibir_preco_antigo"],
+														"disponibilidade" => $produtosInfo[$produtoId]["disponibilidade"]
+													);
+											}
+											$exibirAnuncio .= $this->exibirPreco($precos).'<br>';
 										}
-										$exibirAnuncio .= $preco.'<br>';
 									}
-								}
-								else{
-									
-								}
-								break;
+									else{
+										$exibirAnuncio .= $anuncioInfo["descricao"].'<br>';
+										if($anuncioInfo["exibir_publicidade"] == 1)
+											$exibirAnuncio .= '<span class="'.$anuncioInfo["span_publicidade"].'">'.$anuncioInfo["publicidade"].'</span><br>';
+									}
+									break;
+							}
 						}
-						$exibirAnuncios .= '
-							<td class="caixaAnuncio">
-								'.($exibirLink ? '<a href="#">'.$exibirAnuncio.'</a>' : $exibirAnuncio).'
-							</td>
-						';
+						$exibirAnuncios .= '<td class="caixaAnuncio">'.($exibirLink ? '<a href="'.($this->pegarUrl($anuncio, $anuncioInfo)).'">'.$exibirAnuncio.'</a>' : $exibirAnuncio).'</td>';
 					}
 					$exibirAnuncios .= '
 				</table>
 			';
 			return $exibirAnuncios;
 		}
+		public function pegarUrl($anuncio, $anuncioInfo){
+			$Funcao = new Funcao();
+			return "?p=".($anuncio["tipo"] == 1 ? "produtos" : "categorias")."-".$anuncio["anuncio"]."-".$Funcao->limparString(($anuncioInfo["descricao_site"] ? $anuncioInfo["descricao_site"] : $anuncioInfo["descricao"]));
+		}
 		public function pegarImagem($tipo, $id, $imagem){
-			$diretorio = ($tipo == 1 ? $this->diretorioImagensAnuncios : $this->diretorioImagensCategorias);
+			switch($tipo){
+				case 1:
+					$diretorio = $this->diretorioImagensAnuncios;
+					break;
+				case 2:
+					$diretorio = $this->diretorioImagensCategorias;
+					break;
+				case 3:
+					$diretorio = $this->diretorioImagensMenus;
+					break;
+			}
 			$arquivo = $diretorio.$id.$imagem;
 			$arquivoJpg = $arquivo.".jpg";
 			$arquivoGif = $arquivo.".gif";
@@ -171,7 +189,7 @@
 			return "imagens/conteudo/semImagem".($imagem == "pp" ? "100" : "200").".jpg";
 		}
 		public function exibirPreco($precos){
-			if(count($produtos) == 1)
+			if(count($precos) == 1)
 				$produtoIndisponivel = "Produto indisponível";
 			else
 				$produtoIndisponivel = "Indisponível";
@@ -182,9 +200,9 @@
 				$linhaPreco++;
 				$exibicaoPreco .= '<tr>';
 				foreach($precos as $c => $precoInfo){
-					if($chave == 0)
+					if($c == 0)
 						$novaLinhaPreco = 0;
-					if($chave > 0)
+					if($c > 0)
 						$valorAnterior = $valor;
 					$exibirDivisoria = 0;
 					$exibirCelulaVazia = 0;
@@ -228,7 +246,7 @@
 						else
 							$valor = "";
 					}
-					if($chave > 0){
+					if($c > 0){
 						if($linhaPreco == 1)
 							$exibirDivisoria = 1;
 						elseif($linhaPreco == 2){
