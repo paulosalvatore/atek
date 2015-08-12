@@ -168,29 +168,36 @@
 			$conteudoPagina = "";
 			if($submenu > 0)
 				$conteudoPagina .= $this->exibirSubmenu($submenu);
-			if(!empty($titulo) AND $ocultarTitulo != 1)
-				$conteudoPagina .= '
-					<div class="titulo">
-						'.$titulo.'
-					</div>
-				';
-			if($ocultarBarraNavegacao != 1){
-				$barraNavegacaoInicial = array("Home" => "?p=principal");
-				if(is_array($barraNavegacao))
-					$barraNavegacao = array_merge($barraNavegacaoInicial, $barraNavegacao);
-				else
-					$barraNavegacao = $barraNavegacaoInicial;
-				$conteudoPagina .= '
-					<div class="barraNavegacao">
-						';
-						foreach($barraNavegacao as $nome => $link)
-							$conteudoPagina .= '
-								<a href="'.$link.'">'.$nome.'</a> >
-							';
+			$ordemTituloBarra = ($ordemTituloBarra == 2 ? array(2, 4) : array(0, 2));
+			for($i = $ordemTituloBarra[0];$i < $ordemTituloBarra[1];$i++){
+				if($i == 0 OR $i == 3){
+					if(!empty($titulo) AND $ocultarTitulo != 1)
 						$conteudoPagina .= '
-						'.$titulo.'
-					</div>
-				';
+							<div class="titulo">
+								'.$titulo.'
+							</div>
+						';
+				}
+				elseif($i == 1 OR $i == 2){
+					if($ocultarBarraNavegacao != 1){
+						$barraNavegacaoInicial = array("Home" => "?p=principal");
+						if(is_array($barraNavegacao))
+							$barraNavegacao = array_merge($barraNavegacaoInicial, $barraNavegacao);
+						else
+							$barraNavegacao = $barraNavegacaoInicial;
+						$conteudoPagina .= '
+							<div class="barraNavegacao">
+								';
+								foreach($barraNavegacao as $nome => $link)
+									$conteudoPagina .= '
+										<a href="'.$link.'">'.$nome.'</a> >
+									';
+								$conteudoPagina .= '
+								'.$titulo.'
+							</div>
+						';
+					}
+				}
 			}
 			if(!empty($conteudo))
 				$conteudoPagina .= '
