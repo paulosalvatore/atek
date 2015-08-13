@@ -5,6 +5,6 @@
 	$barraNavegacao = $Anuncios->carregarBarraNavegacao($anuncioInfo, $categoriaInfo);
 	$titulo = $anuncioInfo["descricao"];
 	$ordemTituloBarra = 2;
-	// $conteudo = $Produtos->exibir($id);
+	$conteudo = $Anuncios->exibirAnuncio($id);
 	$corConteudo = "#FFFFFF";
 ?>

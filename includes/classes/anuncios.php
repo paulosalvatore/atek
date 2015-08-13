@@ -158,7 +158,7 @@
 			$Funcao = new Funcao();
 			return "?p=".($anuncio["tipo"] == 1 ? "produtos" : "categorias")."-".$anuncio["anuncio"]."-".$Funcao->limparString(($anuncioInfo["descricao_site"] ? $anuncioInfo["descricao_site"] : $anuncioInfo["descricao"]));
 		}
-		public function pegarImagem($tipo, $id, $imagem){
+		public function pegarImagem($tipo, $id, $imagem, $incluirTag = false){
 			switch($tipo){
 				case 1:
 					$diretorio = $this->diretorioImagensAnuncios;
@@ -171,10 +171,10 @@
 					break;
 			}
 			$arquivo = $diretorio.$id.$imagem;
-			$arquivoJpg = $arquivo.".jpg";
-			$arquivoGif = $arquivo.".gif";
-			$arquivoPng = $arquivo.".png";
-			if(strpos($imagem, "g") === false){
+			if($imagem != "g"){
+				$arquivoJpg = $arquivo.".jpg";
+				$arquivoGif = $arquivo.".gif";
+				$arquivoPng = $arquivo.".png";
 				if(is_file($arquivoJpg))
 					return $arquivoJpg;
 				elseif(is_file($arquivoGif))
@@ -183,8 +183,27 @@
 					return $arquivoPng;
 			}
 			else{
-				return "b";
-				// Imagens Grandes
+				$imagens = array();
+				$proximaImagem = "";
+				while($proximaImagem != "abortar"){
+					$arquivo = $arquivo.$proximaImagem;
+					$arquivoJpg = $arquivo.".jpg";
+					$arquivoGif = $arquivo.".gif";
+					$arquivoPng = $arquivo.".png";
+					if(is_file($arquivoJpg))
+						$imagens[] = $arquivoJpg;
+					elseif(is_file($arquivoGif))
+						$imagens[] = $arquivoGif;
+					elseif(is_file($arquivoPng))
+						$imagens[] = $arquivoPng;
+					else
+						$proximaImagem = "abortar";
+					$proximaImagem = ($proximaImagem != "abortar" ? $proximaImagem = $proximaImagem + 1 : $proximaImagem);
+				}
+				if($incluirTag)
+					foreach($imagens as $c => $v)
+						$imagens[$c] = '<img src="'.$v.'" alt="" />';
+				return $imagens;
 			}
 			return "imagens/conteudo/semImagem".($imagem == "pp" ? "100" : "200").".jpg";
 		}
@@ -294,6 +313,31 @@
 				$menu["descricao"] => $menu["link"],
 				$categoriaInfo["descricao"] => $categoriaInfo["link"]
 			);
+		}
+		public function exibirAnuncio($id){
+			$anuncio = $this->pegarInformacoes($id);
+			$exibirAnuncio = '
+				<div id="popup" altura="'.$anuncio["popup_altura"].'" largura="'.$anuncio["popup_largura"].'" title="'.$anuncio["descricao"].'" align="center">
+					'.implode("<br><br>", $this->pegarImagem(1, $id, "g", true)).'
+				</div>
+				<table cellpadding="5" cellspacing="0" class="imagemProduto">
+					<tr>
+						<td>
+							<img src="'.$this->pegarImagem(1, $id, "m").'">
+						</td>
+						<td>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						</td>
+						<td>
+							<img src="imagens/conteudo/lupa.png" border="0">
+						</td>
+					</tr>
+				</table>
+			';
+			return $exibirAnuncio;
 		}
 	}
 ?>

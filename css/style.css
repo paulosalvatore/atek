@@ -456,6 +456,18 @@ a:hover, a:active {
 	text-decoration: line-through;
 }
 
+#popup {
+	background-color: #FFFFFF;
+}
+
+.imagemProduto {
+	margin-top: 25px;
+}
+
+.imagemProduto img {
+	cursor: pointer;
+}
+
 .textoRodape {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 9px;
