@@ -317,9 +317,6 @@
 		public function exibirAnuncio($id){
 			$anuncio = $this->pegarInformacoes($id);
 			$exibirAnuncio = '
-				<div id="popup" altura="'.$anuncio["popup_altura"].'" largura="'.$anuncio["popup_largura"].'" title="'.$anuncio["descricao"].'" align="center">
-					'.implode("<br><br>", $this->pegarImagem(1, $id, "g", true)).'
-				</div>
 				<table cellpadding="5" cellspacing="0" class="imagemProduto">
 					<tr>
 						<td>
@@ -328,13 +325,18 @@
 						<td>
 						</td>
 					</tr>
-					<tr>
-						<td>
-						</td>
-						<td>
-							<img src="imagens/conteudo/lupa.png" border="0">
-						</td>
-					</tr>
+					'.($anuncio["exibir_popup"] == 1 ? '
+						<div id="popup" altura="'.$anuncio["popup_altura"].'" largura="'.$anuncio["popup_largura"].'" title="'.$anuncio["descricao"].'" align="center">
+							'.implode("<br><br>", $this->pegarImagem(1, $id, "g", true)).'
+						</div>
+						<tr>
+							<td>
+							</td>
+							<td>
+								<img src="imagens/conteudo/lupa.png" border="0">
+							</td>
+						</tr>
+					' : "").'
 				</table>
 			';
 			return $exibirAnuncio;
