@@ -37,7 +37,7 @@
 				pelo período de indisponibilidade ou quaisquer outros prejuízos
 				pessoais ou materiais.<br>
 				<br>
-				<b>Endereço para remessa do equipamento para conserto:</b>
+				<b>Endereço para remessa do equipamento para conserto:</b><br>
 				REFLECTA EQUIPAMENTOS LTDA<br>
 				Rua Galvão Bueno, 859 - Loja 01 – Liberdade<br>
 				CEP 01506-000 - São Paulo - SP<br>
