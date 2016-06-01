@@ -1,5 +1,6 @@
 <?php
-	$anuncioInfo = $Anuncios->pegarInformacoes($id);
+	$anuncio = $Anuncios->pegarInformacoes($id);
+	$anuncioInfo = $anuncio["info"];
 	$categoriaInfo = $Categorias->pegarInformacoes($anuncioInfo["categoria"]);
 	$submenu = $categoriaInfo["menu"];
 	$barraNavegacao = $Anuncios->carregarBarraNavegacao($anuncioInfo, $categoriaInfo);
